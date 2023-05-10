@@ -7,7 +7,7 @@ RUN set -xe;
 COPY . .
 
 RUN apk add --no-cache tini mysql mysql-client gcc musl-dev mariadb-connector-c-dev; \
-    pip install --upgrade pip setuptools-scm django==4.1 mysqlclient; \
+    pip install --upgrade pip setuptools-scm django==4.1 mysqlclient ddtrace; \
     python3 setup.py install; \
     python3 martor_demo/manage.py makemigrations; \
     python3 martor_demo/manage.py migrate; \

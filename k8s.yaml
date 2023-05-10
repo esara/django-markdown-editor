@@ -38,6 +38,10 @@ spec:
                 secretKeyRef:
                   name: mysql-admin-secret
                   key: password
+            - name: DD_APM_ENABLED
+              value: "true"
+            - name: DD_API_KEY
+              value: "ZZZ"
 
 ---
 apiVersion: v1
