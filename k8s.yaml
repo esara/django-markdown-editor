@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: martor
+spec:
+  selector:
+    matchLabels:
+      app: martor
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: martor
+    spec:
+      containers:
+        - name: martor
+          image: esara/martor-demo
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-admin-secret
+                  key: endpoint
+            - name: DATABASE_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-admin-secret
+                  key: port
+            - name: DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-admin-secret
+                  key: username
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-admin-secret
+                  key: password
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: martor
+spec:
+  selector:
+    app: martor
+  ports:
+    - name: http
+      port: 8000
